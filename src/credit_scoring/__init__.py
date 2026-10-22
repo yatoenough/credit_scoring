@@ -2,12 +2,21 @@ import random
 
 import uvicorn
 from fastapi import FastAPI
+from pydantic import BaseModel
+
+
+class ClientData(BaseModel):
+    age: int
+    income: float
+    education: bool
+    work: bool
+    car: bool
 
 app = FastAPI()
 
-@app.get("/score")
-def score():
-    approved = random.choice([False, True])
+@app.post("/score")
+def score(data: ClientData):
+    approved = data.income > 50 or (data.education and data.work)
     return {"approved": approved}
 
 def serve():
