@@ -31,3 +31,11 @@ uv run streamlit run src/credit_scoring/app.py
 ```
 
 The interface expects a scoring API that accepts the applicant fields and returns an `approved` result.
+
+## Roadmap
+
+- [ ] Dockerize the API and Streamlit app.
+- [ ] Explore the data with basic EDA: distributions, missing values, class balance, and feature relationships.
+- [ ] Add a preprocessing pipeline and save it together with the model.
+- [ ] Improve evaluation with reproducible splits and metrics such as precision, recall, and a confusion matrix.
+- [ ] Add tests and CI checks, and document the dataset and the demo's limitations.
