@@ -1,22 +1,16 @@
-import random
-
+import joblib
 import uvicorn
 from fastapi import FastAPI
-from pydantic import BaseModel
 
-
-class ClientData(BaseModel):
-    age: int
-    income: float
-    education: bool
-    work: bool
-    car: bool
+from credit_scoring.models import ClientData
 
 app = FastAPI()
+model = joblib.load("models/model.pkl")
 
 @app.post("/score")
 def score(data: ClientData):
-    approved = data.income > 50 or (data.education and data.work)
+    features = [data.age, data.income, data.education, data.work, data.car]
+    approved = not model.predict([features])[0].item()
     return {"approved": approved}
 
 def serve():
