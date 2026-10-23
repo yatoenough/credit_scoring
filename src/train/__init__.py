@@ -1,6 +1,6 @@
 import joblib
 import numpy as np
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.metrics import precision_score, recall_score
 from sklearn.model_selection import train_test_split
 
@@ -8,8 +8,12 @@ from utils.load import load_sql
 
 
 def prepare_data(data):
-    X = data.drop(columns=["default", "index"]).values
-    y = data["default"].values
+    data = data.drop_duplicates()
+
+    X = data.drop(columns=["default", "index"])
+    y = data["default"]
+
+    X["income"] = np.log10(X["income"])
 
     return train_test_split(X, y, test_size=0.2)
 
