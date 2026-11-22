@@ -32,5 +32,12 @@ def score(data: ClientData, request: Request):
     return {"approved": p < bundle["threshold"], "default_probability": p}
 
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
 def serve():
-    uvicorn.run(app, host="127.0.0.1", port=3333)
+    host = os.environ.get("HOST", "127.0.0.1")
+    port = int(os.environ.get("PORT", "3333"))
+    uvicorn.run(app, host=host, port=port)

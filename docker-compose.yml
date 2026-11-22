@@ -1,0 +1,27 @@
+services:
+  api:
+    build: .
+    image: credit-scoring
+    command: uvicorn credit_scoring.api:app --host 0.0.0.0 --port 3333
+    ports:
+      - "3333:3333"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:3333/health')"
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  ui:
+    image: credit-scoring
+    command: streamlit run src/credit_scoring/ui.py --server.address 0.0.0.0 --server.port 8501
+    environment:
+      API_URL: http://api:3333
+    ports:
+      - "8501:8501"
+    depends_on:
+      api:
+        condition: service_healthy

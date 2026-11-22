@@ -1,0 +1,8 @@
+.venv
+.git
+.github
+notebooks
+target
+metrics
+tests
+**/__pycache__

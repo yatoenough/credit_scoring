@@ -26,7 +26,7 @@ if submit:
     api_url = os.environ.get("API_URL", "http://127.0.0.1:3333")
 
     try:
-        response = requests.post(api_url + "/score", json=data)
+        response = requests.post(api_url + "/score", json=data, timeout=5)
         response.raise_for_status()
 
         response_json = response.json()

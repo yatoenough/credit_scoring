@@ -26,3 +26,7 @@ def test_invalid_request(client, override):
     response = client.post("/score", json=VALID | override)
 
     assert response.status_code == 422
+
+
+def test_health(client):
+    assert client.get("/health").json() == {"status": "ok"}
