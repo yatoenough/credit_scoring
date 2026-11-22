@@ -10,7 +10,7 @@ wheels/
 # Virtual environments
 .venv
 
-# Models
-models/
+# Outputs (trained models, etc.)
+target/
 
 ROADMAP.md

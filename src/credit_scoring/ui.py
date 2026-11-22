@@ -28,12 +28,18 @@ if submit:
     try:
         response = requests.post(api_url + "/score", json=data)
         response.raise_for_status()
-        if response.json()["approved"]:
+
+        response_json = response.json()
+        approved = response_json["approved"]
+        default_probability = response_json["default_probability"]
+        if response_json["approved"]:
             st.success("Your application has been approved!")
         else:
             st.info(
                 "We're recommending an alternative for you - debit card with 3% cashback"
             )
+
+        st.info(f"Default probability: {default_probability:.2f}")
     except requests.Timeout:
         st.error("Request timed out after 5s.")
         st.stop()

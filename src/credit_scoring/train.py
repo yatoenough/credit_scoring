@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import joblib
@@ -42,11 +43,11 @@ def main():
     print(f"Precision: {metrics['precision'] * 100:.0f}%")
     print(f"Recall: {metrics['recall'] * 100:.0f}%")
 
-    model_path = "models/model.pkl"
-    Path("models").mkdir(parents=True, exist_ok=True)
+    target_path = os.environ.get("TARGET_PATH", "target/model.pkl")
+    Path("target").mkdir(parents=True, exist_ok=True)
 
     joblib.dump(
-        {"pipeline": pipe, "threshold": threshold, "features": FEATURES}, model_path
+        {"pipeline": pipe, "threshold": threshold, "features": FEATURES}, target_path
     )
 
-    print(f"Saved model to {model_path}")
+    print(f"Saved model to {target_path}")

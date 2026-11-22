@@ -12,12 +12,12 @@ from credit_scoring.models import ClientData
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    model_path = Path(os.environ.get("MODEL_PATH", "models/model.pkl"))
-    if not model_path.exists():
+    target_path = Path(os.environ.get("TARGET_PATH", "target/model.pkl"))
+    if not target_path.exists():
         raise RuntimeError(
-            f"Model not found at {model_path}. Run `uv run train` first."
+            f"Model not found at {target_path}. Run `uv run train` first."
         )
-    app.state.model = joblib.load(model_path)
+    app.state.model = joblib.load(target_path)
     yield
 
 
