@@ -6,7 +6,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import precision_score, recall_score
 from sklearn.model_selection import train_test_split
 
-from utils.load import load_sql
+from credit_scoring.data import load_sql
 
 
 def prepare_data(data):

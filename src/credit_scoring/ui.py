@@ -26,7 +26,7 @@ if submit:
     api_url = os.environ.get("API_URL", "http://127.0.0.1:3333")
 
     try:
-        response = requests.post(api_url, json=data)
+        response = requests.post(api_url + "/score", json=data)
         response.raise_for_status()
         if response.json()["approved"]:
             st.success("Your application has been approved!")

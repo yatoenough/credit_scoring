@@ -17,14 +17,11 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-    "jupyter>=1.1.1",
-    "matplotlib>=3.11.2",
-]
+dev = ["jupyter>=1.1.1", "matplotlib>=3.11.2"]
 
 [project.scripts]
-serve = "credit_scoring:serve"
-train = "train:main"
+serve = "credit_scoring.api:serve"
+train = "credit_scoring.train:main"
 
 [build-system]
 requires = ["uv_build>=0.13.1,<0.14.0"]
