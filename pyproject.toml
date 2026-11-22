@@ -1,6 +1,6 @@
 [project]
 name = "credit-scoring"
-version = "0.1.0"
+version = "1.0.0"
 description = "Credit Scoring Service deciding to give certain client a credit card or not"
 readme = "README.md"
 authors = [{ name = "Nikita Shyshkin", email = "yatoenough@gmail.com" }]
