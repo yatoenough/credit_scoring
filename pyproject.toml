@@ -17,7 +17,13 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["jupyter>=1.1.1", "matplotlib>=3.11.2"]
+dev = [
+    "httpx>=0.28.1",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.11.2",
+    "pytest>=9.2.0",
+    "ruff>=0.17.6",
+]
 
 [project.scripts]
 serve = "credit_scoring.api:serve"
@@ -26,3 +32,13 @@ train = "credit_scoring.train:main"
 [build-system]
 requires = ["uv_build>=0.13.1,<0.14.0"]
 build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 88
+extend-exclude = ["notebooks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

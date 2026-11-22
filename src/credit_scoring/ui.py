@@ -36,7 +36,8 @@ if submit:
             st.success("Your application has been approved!")
         else:
             st.info(
-                "We're recommending an alternative for you - debit card with 3% cashback"
+                "We're recommending an alternative for you - "
+                "debit card with 3% cashback"
             )
 
         st.info(f"Default probability: {default_probability:.2f}")
