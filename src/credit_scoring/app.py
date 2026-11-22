@@ -13,10 +13,18 @@ with st.form("Apply now"):
     submit = st.form_submit_button("Apply")
 
 if submit:
-    data = {"age": age, "income": income, "education": education, "work": work, "car": car}
+    data = {
+        "age": age,
+        "income": income,
+        "education": education,
+        "work": work,
+        "car": car,
+    }
     # TODO: get API url through config
     response = requests.post("http://127.0.0.1:3333/score", json=data)
     if response.json()["approved"]:
         st.success("Your application has been approved!")
     else:
-        st.success("We're recommending an alternative for you - debit card with 3% cashback")
+        st.success(
+            "We're recommending an alternative for you - debit card with 3% cashback"
+        )
