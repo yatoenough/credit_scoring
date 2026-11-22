@@ -3,14 +3,10 @@ name = "credit-scoring"
 version = "0.1.0"
 description = "Credit Scoring Service deciding to give certain client a credit card or not"
 readme = "README.md"
-authors = [
-    { name = "Nikita Shyshkin", email = "yatoenough@gmail.com" }
-]
+authors = [{ name = "Nikita Shyshkin", email = "yatoenough@gmail.com" }]
 requires-python = ">=3.14"
 dependencies = [
     "fastapi==0.161.1",
-    "ipykernel>=7.4.0",
-    "matplotlib>=3.11.2",
     "numpy>=2.5.4",
     "pandas==3.1.0",
     "requests>=2.34.2",
@@ -18,6 +14,12 @@ dependencies = [
     "sqlalchemy>=2.1.6",
     "streamlit>=1.66.1",
     "uvicorn>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "jupyter>=1.1.1",
+    "matplotlib>=3.11.2",
 ]
 
 [project.scripts]

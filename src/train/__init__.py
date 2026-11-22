@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import joblib
 import numpy as np
 from sklearn.linear_model import LogisticRegression
@@ -8,14 +10,12 @@ from utils.load import load_sql
 
 
 def prepare_data(data):
-    data = data.drop_duplicates()
-
     X = data.drop(columns=["default", "index"])
     y = data["default"]
 
     X["income"] = np.log10(X["income"])
 
-    return train_test_split(X, y, test_size=0.2)
+    return train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
 
 def train_model(X_train, y_train):
@@ -45,6 +45,8 @@ def main():
     print(f"Recall: {metrics['recall'] * 100:.0f}%")
 
     model_path = "models/model.pkl"
+    Path("models").mkdir(exist_ok=True)
 
     joblib.dump(model, model_path)
+
     print(f"Saved model to {model_path}")
