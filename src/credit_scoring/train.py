@@ -2,26 +2,23 @@ from pathlib import Path
 
 import joblib
 import numpy as np
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import precision_score, recall_score
 from sklearn.model_selection import train_test_split
 
 from credit_scoring.data import load_sql
+from credit_scoring.pipeline import FEATURES, TARGET, build_pipeline
 
 
 def prepare_data(data):
-    X = data.drop(columns=["default", "index"])
-    y = data["default"]
-
-    X["income"] = np.log10(X["income"])
+    X = data[FEATURES]
+    y = data[TARGET]
 
     return train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
 
 def train_model(X_train, y_train):
-    model = LogisticRegression(class_weight="balanced")
-    model.fit(X_train, y_train)
-    return model
+    pipe = build_pipeline().fit(X_train, y_train)
+    return pipe
 
 
 def get_metrics(y_true, y_pred):
@@ -35,8 +32,9 @@ def main():
     data = load_sql("sqlite:///data/scoring.db")
     X_train, X_test, y_train, y_test = prepare_data(data)
 
-    model = train_model(X_train, y_train)
-    y_pred = model.predict(X_test)
+    pipe = train_model(X_train, y_train)
+    threshold = 0.5
+    y_pred = (pipe.predict_proba(X_test)[:, 1] >= threshold).astype(int)
 
     metrics = get_metrics(y_test, y_pred)
 
@@ -45,8 +43,10 @@ def main():
     print(f"Recall: {metrics['recall'] * 100:.0f}%")
 
     model_path = "models/model.pkl"
-    Path("models").mkdir(exist_ok=True)
+    Path("models").mkdir(parents=True, exist_ok=True)
 
-    joblib.dump(model, model_path)
+    joblib.dump(
+        {"pipeline": pipe, "threshold": threshold, "features": FEATURES}, model_path
+    )
 
     print(f"Saved model to {model_path}")
